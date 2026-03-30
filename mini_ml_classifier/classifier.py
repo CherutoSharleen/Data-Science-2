@@ -25,3 +25,22 @@ def predict(model: dict[str, Counter[str]], text: str) -> str:
     for label, counts in model.items():
         scores[label] = sum(counts[t] for t in toks)
     return max(scores, key=scores.get)
+
+
+def predict_with_score(model: dict[str, Counter[str]], text: str) -> tuple[str, int]:
+    toks = _tokens(text)
+    scores = {}
+    for label, counts in model.items():
+        scores[label] = sum(counts[t] for t in toks)
+    best = max(scores, key=scores.get)
+    return best, scores[best]
+
+
+def evaluate(model: dict[str, Counter[str]], dataset: list[dict[str, str]]) -> float:
+    if not dataset:
+        return 0.0
+    correct = 0
+    for row in dataset:
+        if predict(model, row["text"]) == row["label"]:
+            correct += 1
+    return correct / len(dataset)

@@ -3,7 +3,7 @@ from pathlib import Path
 
 import json
 
-from classifier import evaluate, predict, predict_with_score, train
+from classifier import evaluate, label_counts, predict, predict_with_score, train
 
 
 class MiniClassifierTests(unittest.TestCase):
@@ -25,6 +25,13 @@ class MiniClassifierTests(unittest.TestCase):
         acc = evaluate(model, dataset)
         self.assertGreaterEqual(acc, 0.0)
         self.assertLessEqual(acc, 1.0)
+
+    def test_label_counts(self) -> None:
+        base = Path(__file__).resolve().parent
+        dataset = json.loads((base / "dataset.json").read_text(encoding="utf-8"))
+        counts = label_counts(dataset)
+        self.assertIn("positive", counts)
+        self.assertIn("negative", counts)
 
 
 if __name__ == "__main__":

@@ -44,3 +44,10 @@ def evaluate(model: dict[str, Counter[str]], dataset: list[dict[str, str]]) -> f
         if predict(model, row["text"]) == row["label"]:
             correct += 1
     return correct / len(dataset)
+
+
+def label_counts(dataset: list[dict[str, str]]) -> dict[str, int]:
+    counts: Counter[str] = Counter()
+    for row in dataset:
+        counts[row["label"]] += 1
+    return dict(counts)

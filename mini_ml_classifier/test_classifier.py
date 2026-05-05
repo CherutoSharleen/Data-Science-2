@@ -3,7 +3,7 @@ from pathlib import Path
 
 import json
 
-from classifier import evaluate, label_counts, predict, predict_with_score, train
+from classifier import confusion_matrix, evaluate, label_counts, predict, predict_with_score, train
 
 
 class MiniClassifierTests(unittest.TestCase):
@@ -32,6 +32,11 @@ class MiniClassifierTests(unittest.TestCase):
         counts = label_counts(dataset)
         self.assertIn("positive", counts)
         self.assertIn("negative", counts)
+
+    def test_confusion_matrix(self) -> None:
+        matrix = confusion_matrix(["positive", "negative"], ["positive", "positive"])
+        self.assertEqual(matrix["positive"]["positive"], 1)
+        self.assertEqual(matrix["negative"]["positive"], 1)
 
 
 if __name__ == "__main__":

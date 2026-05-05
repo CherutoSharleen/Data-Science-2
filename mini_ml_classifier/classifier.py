@@ -51,3 +51,14 @@ def label_counts(dataset: list[dict[str, str]]) -> dict[str, int]:
     for row in dataset:
         counts[row["label"]] += 1
     return dict(counts)
+
+
+def confusion_matrix(
+    expected: list[str],
+    predicted: list[str],
+) -> dict[str, dict[str, int]]:
+    labels = sorted(set(expected) | set(predicted))
+    matrix = {label: {inner: 0 for inner in labels} for label in labels}
+    for exp, pred in zip(expected, predicted):
+        matrix[exp][pred] += 1
+    return matrix

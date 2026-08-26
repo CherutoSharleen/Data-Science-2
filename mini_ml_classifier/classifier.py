@@ -62,3 +62,8 @@ def confusion_matrix(
     for exp, pred in zip(expected, predicted):
         matrix[exp][pred] += 1
     return matrix
+
+
+def top_tokens_by_label(model: dict[str, Counter[str]], label: str, top_k: int = 5) -> list[tuple[str, int]]:
+    counts = model.get(label, Counter())
+    return counts.most_common(top_k)

@@ -3,7 +3,16 @@ from pathlib import Path
 
 import json
 
-from classifier import confusion_matrix, evaluate, label_counts, predict, predict_with_score, top_tokens_by_label, train
+from classifier import (
+    confusion_matrix,
+    evaluate,
+    label_counts,
+    model_labels,
+    predict,
+    predict_with_score,
+    top_tokens_by_label,
+    train,
+)
 
 
 class MiniClassifierTests(unittest.TestCase):
@@ -42,6 +51,11 @@ class MiniClassifierTests(unittest.TestCase):
         model = train(Path(__file__).resolve().parent / "dataset.json")
         top = top_tokens_by_label(model, "positive", top_k=3)
         self.assertLessEqual(len(top), 3)
+
+    def test_model_labels(self) -> None:
+        model = train(Path(__file__).resolve().parent / "dataset.json")
+        labels = model_labels(model)
+        self.assertEqual(labels, ["negative", "positive"])
 
 
 if __name__ == "__main__":

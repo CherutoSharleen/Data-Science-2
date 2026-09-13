@@ -67,3 +67,7 @@ def confusion_matrix(
 def top_tokens_by_label(model: dict[str, Counter[str]], label: str, top_k: int = 5) -> list[tuple[str, int]]:
     counts = model.get(label, Counter())
     return counts.most_common(top_k)
+
+
+def model_labels(model: dict[str, Counter[str]]) -> list[str]:
+    return sorted(model.keys())

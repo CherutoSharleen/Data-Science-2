@@ -9,6 +9,7 @@ from classifier import (
     label_counts,
     model_labels,
     predict,
+    predict_many,
     predict_with_score,
     top_tokens_by_label,
     train,
@@ -56,6 +57,11 @@ class MiniClassifierTests(unittest.TestCase):
         model = train(Path(__file__).resolve().parent / "dataset.json")
         labels = model_labels(model)
         self.assertEqual(labels, ["negative", "positive"])
+
+    def test_predict_many(self) -> None:
+        model = train(Path(__file__).resolve().parent / "dataset.json")
+        labels = predict_many(model, ["helpful support", "bad unresolved issue"])
+        self.assertEqual(len(labels), 2)
 
 
 if __name__ == "__main__":

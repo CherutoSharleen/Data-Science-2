@@ -71,3 +71,7 @@ def top_tokens_by_label(model: dict[str, Counter[str]], label: str, top_k: int =
 
 def model_labels(model: dict[str, Counter[str]]) -> list[str]:
     return sorted(model.keys())
+
+
+def predict_many(model: dict[str, Counter[str]], texts: list[str]) -> list[str]:
+    return [predict(model, text) for text in texts]
